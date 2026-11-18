@@ -1,0 +1,23 @@
+[Unit]
+Description=Telegram DeepSeek Admin Dashboard
+After=docker.service network-online.target
+Requires=docker.service
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=__APP_DIR__
+Environment=PYTHONPATH=__APP_DIR__/src
+Environment=ADMIN_PROJECT_ROOT=__APP_DIR__
+Environment=ADMIN_CONFIG_PATH=__APP_DIR__/config/config.yaml
+EnvironmentFile=__APP_DIR__/data/admin.env
+ExecStart=__APP_DIR__/.venv/bin/python -m tgdeepseek.admin_portal
+Restart=always
+RestartSec=3
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectHome=true
+ReadWritePaths=__APP_DIR__/config __APP_DIR__/data
+
+[Install]
+WantedBy=multi-user.target

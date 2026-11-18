@@ -1,0 +1,24 @@
+[Unit]
+Description=Telegram DeepSeek Personal Account Assistant
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=__APP_DIR__
+EnvironmentFile=__APP_DIR__/.env
+Environment=PLAYWRIGHT_BROWSERS_PATH=__APP_DIR__/data/ms-playwright
+Environment=LD_LIBRARY_PATH=__APP_DIR__/data/chromium-libs/usr/lib/x86_64-linux-gnu
+ExecStart=__APP_DIR__/.venv/bin/python -m tgdeepseek run
+Restart=on-failure
+RestartSec=8
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=__APP_DIR__/data
+UMask=0077
+
+[Install]
+WantedBy=default.target
+
